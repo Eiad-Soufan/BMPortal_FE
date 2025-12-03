@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- Fonts (أسرع تحميل) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- أيقونات وتطبيق -->
+    <link rel="icon" href="%PUBLIC_URL%/logo2.png" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- موبايل/حواف الشاشة -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <!-- ألوان شريط المتصفح حسب الثيم -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <meta name="color-scheme" content="light dark" />
+
+    <meta name="description" content="Web site created using create-react-app" />
+    <title>Berkat Madinah Portal</title>
+
+    <!-- أساسيات خفيفة + إصلاح ظهور نص الحقول -->
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        font-family: "Cairo", system-ui, -apple-system, "Segoe UI", Roboto,
+                     "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      img, video, canvas, svg { max-width: 100%; height: auto; display: block; }
+
+      /* ===== إصلاح مهم: اجعل نص الحقول مرئيًا دائمًا ===== */
+      #root input, #root textarea, #root select {
+        color: #0f172a !important;          /* نص داكن */
+        -webkit-text-fill-color: #0f172a;   /* لسفاري */
+        background-color: #ffffff;          /* خلفية بيضاء صريحة */
+        caret-color: #0f172a;               /* لون مؤشّر الكتابة */
+        font: inherit;
+      }
+      #root input::placeholder, #root textarea::placeholder {
+        color: #6b7280;
+        opacity: 1;
+      }
+      /* معالجة أوتو-فِلّ كروم/سفاري (الخلفية الصفراء) */
+      #root input:-webkit-autofill,
+      #root textarea:-webkit-autofill,
+      #root select:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+        -webkit-text-fill-color: #0f172a !important;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
