@@ -4,16 +4,25 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { getTask, listComments, addComment, completeNextPhase, markTaskFailed, markTaskSuccess, cancelTask } from '../api/tasks';
+import {
+  getTask,
+  listComments,
+  addComment,
+  completeNextPhase,
+  markTaskFailed,
+  markTaskSuccess,
+  cancelTask,
+} from '../api/tasks';
 import { Button, Badge, Card, Form } from 'react-bootstrap';
 import { jwtDecode } from 'jwt-decode';
 
-const statusColor = (s) => ({
-  open: 'warning',
-  success: 'success',
-  failed: 'danger',
-  cancelled: 'secondary',
-}[s] || 'secondary');
+const statusColor = (s) =>
+  ({
+    open: 'warning',
+    success: 'success',
+    failed: 'danger',
+    cancelled: 'secondary',
+  }[s] || 'secondary');
 
 export default function TaskDetails() {
   const { id } = useParams();
@@ -24,6 +33,7 @@ export default function TaskDetails() {
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(true);
   const [posting, setPosting] = useState(false);
+
   const __LOCAL_UI_CSS__ = `
   .bm-btn{
     display:inline-flex; align-items:center; justify-content:center;
@@ -46,16 +56,93 @@ export default function TaskDetails() {
 
   .bm-btn--secondary{ color:#fff; background:linear-gradient(135deg,#9ca3af,#6b7280,#4b5563); }
   .bm-btn--secondary:hover{ filter:brightness(1.05); }
+
+  /* ✅ هيدر تفاصيل المهمة - رسبونسيف */
+  .td-header{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.75rem;
+    align-items:flex-start;
+    justify-content:space-between;
+  }
+  .td-header-main{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.5rem;
+    align-items:center;
+    min-width:0;
+  }
+  .td-header-main h3{
+    margin:0;
+    color:#fff;
+    word-break:break-word;
+  }
+  .td-header-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.5rem;
+    justify-content:flex-end;
+  }
+
+  /* progress + أزرار complete next */
+  .td-progress-row{
+    flex-wrap:wrap;
+    gap:0.75rem;
+  }
+  .td-progress-main{
+    flex:1 1 200px;
+    min-width:0;
+  }
+  .td-progress-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.5rem;
+    justify-content:flex-end;
+  }
+
+  @media (max-width: 768px){
+    .td-header{
+      flex-direction:column;
+      align-items:stretch;
+    }
+    .td-header-actions{
+      justify-content:flex-start;
+    }
+    .td-progress-row{
+      flex-direction:column;
+      align-items:flex-start;
+    }
+    .td-progress-actions{
+      width:100%;
+      justify-content:flex-start;
+    }
+  }
 `;
 
-  const userId = useMemo(() => (localStorage.getItem('userId') || '').toString(), []);
+  const userId = useMemo(
+    () => (localStorage.getItem('userId') || '').toString(),
+    []
+  );
+
   const role = useMemo(() => {
     const token = localStorage.getItem('access');
-    try { if (token) { const d = jwtDecode(token); return (d.role || localStorage.getItem('userRole') || 'employee').toLowerCase(); } } catch { }
+    try {
+      if (token) {
+        const d = jwtDecode(token);
+        return (
+          (d.role || localStorage.getItem('userRole') || 'employee')?.toLowerCase() ||
+          'employee'
+        );
+      }
+    } catch {}
     return (localStorage.getItem('userRole') || 'employee').toLowerCase();
   }, []);
 
-  const canManage = role === 'hr' || role === 'manager' || role === 'general_manager' || localStorage.getItem('is_staff') === 'true';
+  const canManage =
+    role === 'hr' ||
+    role === 'manager' ||
+    role === 'general_manager' ||
+    localStorage.getItem('is_staff') === 'true';
 
   const fetchAll = async () => {
     setLoading(true);
@@ -71,12 +158,16 @@ export default function TaskDetails() {
     }
   };
 
-  useEffect(() => { fetchAll(); }, [id]);
+  useEffect(() => {
+    fetchAll();
+  }, [id]);
 
   const isAssigned = useMemo(() => {
     if (!task) return false;
-    const hasUser = (task.recipients || []).some(r => String(r.user) === userId);
-    const forHR = (task.recipients || []).some(r => r.is_hr_team);
+    const hasUser = (task.recipients || []).some(
+      (r) => String(r.user) === userId
+    );
+    const forHR = (task.recipients || []).some((r) => r.is_hr_team);
     return hasUser || (role === 'hr' && forHR);
   }, [task, userId, role]);
 
@@ -107,39 +198,72 @@ export default function TaskDetails() {
   };
 
   const manageState = async (fn) => {
-    try { setPosting(true); await fn(id); await fetchAll(); }
-    catch (e) { alert(e?.response?.data?.detail || e.message); }
-    finally { setPosting(false); }
+    try {
+      setPosting(true);
+      await fn(id);
+      await fetchAll();
+    } catch (e) {
+      alert(e?.response?.data?.detail || e.message);
+    } finally {
+      setPosting(false);
+    }
   };
 
   if (loading) {
     return (
-      <div className="min-vh-100 d-flex flex-column" style={{ background: 'linear-gradient(180deg,#0f5132,#0b2e13)' }}>
-        <Header /><div className="container text-white-50 py-5">{t('loading') || 'Loading...'}</div><Footer />
+      <div
+        className="min-vh-100 d-flex flex-column"
+        style={{ background: 'linear-gradient(180deg,#0f5132,#0b2e13)' }}
+      >
+        <Header />
+        <div className="container text-white-50 py-5">
+          {t('loading') || 'Loading...'}
+        </div>
+        <Footer />
       </div>
     );
   }
 
   if (!task) {
     return (
-      <div className="min-vh-100 d-flex flex-column" style={{ background: 'linear-gradient(180deg,#0f5132,#0b2e13)' }}>
-        <Header /><div className="container text-white-50 py-5">Not found</div><Footer />
+      <div
+        className="min-vh-100 d-flex flex-column"
+        style={{ background: 'linear-gradient(180deg,#0f5132,#0b2e13)' }}
+      >
+        <Header />
+        <div className="container text-white-50 py-5">Not found</div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-vh-100 d-flex flex-column" style={{ background: 'linear-gradient(180deg,#0f5132,#0b2e13)' }}>
+    <div
+      className="min-vh-100 d-flex flex-column"
+      style={{ background: 'linear-gradient(180deg,#0f5132,#0b2e13)' }}
+    >
       <Header />
 
       <div className="container my-4">
-        <div className="d-flex align-items-center justify-content-between mb-3">
-          <div className="d-flex align-items-center gap-3">
-            <Link to="/tasks" className="btn btn-outline-light btn-sm">← {t('back') || 'Back'}</Link>
-            <h3 className="text-white m-0">{task.title}</h3>
-            <Badge bg={statusColor(task.status)} className="text-uppercase">{task.status}</Badge>
+        {/* ✅ هيدر المهمة (رسبونسيف) */}
+        <div className="td-header mb-3">
+          <div className="td-header-main">
+            <Link
+              to="/tasks"
+              className="btn btn-outline-light btn-sm"
+            >
+              ← {t('back') || 'Back'}
+            </Link>
+            <h3 className="m-0">{task.title}</h3>
+            <Badge
+              bg={statusColor(task.status)}
+              className="text-uppercase"
+            >
+              {task.status}
+            </Badge>
           </div>
-          <div className="d-flex gap-2">
+
+          <div className="td-header-actions">
             {canManage && task.status === 'open' && (
               <>
                 <Button
@@ -179,28 +303,50 @@ export default function TaskDetails() {
               </>
             )}
           </div>
-
         </div>
 
         {task.description && (
           <p className="text-white-50">{task.description}</p>
         )}
 
+        {/* ✅ كارت التقدم + أزرار complete next رسبونسيف */}
         <Card className="mb-4">
           <Card.Body>
-            <div className="d-flex align-items-center justify-content-between">
-              <div className="flex-grow-1 me-3">
+            <div className="td-progress-row d-flex align-items-center justify-content-between">
+              <div className="td-progress-main me-3">
                 <div className="progress" style={{ height: 10 }}>
-                  <div className="progress-bar" role="progressbar" style={{ width: `${task.progress_percent || 0}%` }} aria-valuenow={task.progress_percent || 0} aria-valuemin="0" aria-valuemax="100"></div>
+                  <div
+                    className="progress-bar"
+                    role="progressbar"
+                    style={{ width: `${task.progress_percent || 0}%` }}
+                    aria-valuenow={task.progress_percent || 0}
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  />
                 </div>
                 <small className="text-muted">
                   {t('progress') || 'Progress'}: {task.progress_percent || 0}%
                 </small>
               </div>
+
               {isAssigned && task.status === 'open' && (
-                <div className="d-flex gap-2">
-                  <Button variant="success" disabled={posting} onClick={() => completePhase('success')}>{t('complete_next_success') || 'Complete next: Success'}</Button>
-                  <Button variant="outline-danger" disabled={posting} onClick={() => completePhase('failed')}>{t('complete_next_failed') || 'Complete next: Failed'}</Button>
+                <div className="td-progress-actions d-flex gap-2">
+                  <Button
+                    variant="success"
+                    disabled={posting}
+                    onClick={() => completePhase('success')}
+                  >
+                    {t('complete_next_success') ||
+                      'Complete next: Success'}
+                  </Button>
+                  <Button
+                    variant="outline-danger"
+                    disabled={posting}
+                    onClick={() => completePhase('failed')}
+                  >
+                    {t('complete_next_failed') ||
+                      'Complete next: Failed'}
+                  </Button>
                 </div>
               )}
             </div>
@@ -211,16 +357,27 @@ export default function TaskDetails() {
           <div className="col-12 col-lg-7">
             <Card className="h-100">
               <Card.Body>
-                <h5 className="mb-3">{t('phases') || 'Phases'}</h5>
+                <h5 className="mb-3">
+                  {t('phases') || 'Phases'}
+                </h5>
                 <ol className="list-group list-group-numbered">
-                  {(task.phases || []).map(ph => (
-                    <li className="list-group-item d-flex align-items-center justify-content-between" key={ph.id}>
+                  {(task.phases || []).map((ph) => (
+                    <li
+                      className="list-group-item d-flex align-items-center justify-content-between"
+                      key={ph.id}
+                    >
                       <div>
                         <div className="fw-semibold">{ph.text}</div>
-                        <small className="text-muted">{t('status') || 'Status'}: {ph.status}</small>
+                        <small className="text-muted">
+                          {t('status') || 'Status'}: {ph.status}
+                        </small>
                       </div>
                       <div style={{ fontSize: 20 }}>
-                        {ph.status === 'success' ? '✅' : ph.status === 'failed' ? '❌' : '⏳'}
+                        {ph.status === 'success'
+                          ? '✅'
+                          : ph.status === 'failed'
+                          ? '❌'
+                          : '⏳'}
                       </div>
                     </li>
                   ))}
@@ -228,26 +385,61 @@ export default function TaskDetails() {
               </Card.Body>
             </Card>
           </div>
+
           <div className="col-12 col-lg-5">
             <Card className="h-100">
               <Card.Body className="d-flex flex-column">
-                <h5 className="mb-3">{t('comments') || 'Comments'}</h5>
-                <div className="flex-grow-1 overflow-auto" style={{ maxHeight: 320 }}>
-                  {(comments || []).map(c => (
+                <h5 className="mb-3">
+                  {t('comments') || 'Comments'}
+                </h5>
+                <div
+                  className="flex-grow-1 overflow-auto"
+                  style={{ maxHeight: 320 }}
+                >
+                  {(comments || []).map((c) => (
                     <div key={c.id} className="mb-3">
-                      <div className="fw-semibold">{c.author_name || c.author}</div>
+                      <div className="fw-semibold">
+                        {c.author_name || c.author}
+                      </div>
                       <div>{c.text}</div>
-                      <small className="text-muted">{new Date(c.created_at).toLocaleString()}</small>
+                      <small className="text-muted">
+                        {new Date(
+                          c.created_at
+                        ).toLocaleString()}
+                      </small>
                       <hr />
                     </div>
                   ))}
-                  {(comments || []).length === 0 && <div className="text-muted">{t('no_comments') || 'No comments yet'}</div>}
+                  {(comments || []).length === 0 && (
+                    <div className="text-muted">
+                      {t('no_comments') ||
+                        'No comments yet'}
+                    </div>
+                  )}
                 </div>
+
                 {task.status === 'open' && (
                   <div className="mt-3">
-                    <Form.Control as="textarea" rows={2} placeholder={t('write_comment') || 'Write a comment...'} value={text} onChange={(e) => setText(e.target.value)} />
+                    <Form.Control
+                      as="textarea"
+                      rows={2}
+                      placeholder={
+                        t('write_comment') ||
+                        'Write a comment...'
+                      }
+                      value={text}
+                      onChange={(e) =>
+                        setText(e.target.value)
+                      }
+                    />
                     <div className="d-flex justify-content-end mt-2">
-                      <Button onClick={addCmt} disabled={posting || !text.trim()}>{t('add_comment') || 'Add comment'}</Button>
+                      <Button
+                        onClick={addCmt}
+                        disabled={posting || !text.trim()}
+                      >
+                        {t('add_comment') ||
+                          'Add comment'}
+                      </Button>
                     </div>
                   </div>
                 )}
@@ -259,9 +451,6 @@ export default function TaskDetails() {
 
       <Footer />
       <style>{__LOCAL_UI_CSS__}</style>
-
     </div>
-
-
   );
 }
