@@ -100,7 +100,7 @@ function Featured({ title, list, accent }) {
 
 export default function HonorBoard({ mount = 'header' }) {
   const [data, setData] = useState(null);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const fetchingRef = useRef(false);
   const attemptsRef = useRef(0);
 
@@ -356,4 +356,5 @@ export default function HonorBoard({ mount = 'header' }) {
     </div>
   );
 }
+
 
