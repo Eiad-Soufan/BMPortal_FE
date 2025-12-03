@@ -149,6 +149,23 @@ const statusTextClass = (s) => {
   return map[v] || '';
 };
 
+// ✅ helper لاختيار أول قيمة رقمية صالحة (نفضّل progress_percentage)
+const getNumericProgress = (task) => {
+  const candidates = [
+    task.progress_percentage,
+    task.progress,
+    task.progress_percent,
+    task.completion_percentage,
+  ];
+
+  for (const v of candidates) {
+    if (v === undefined || v === null) continue;
+    const n = Number(v);
+    if (!Number.isNaN(n)) return n;
+  }
+  return 0;
+};
+
 export default function Tasks() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -323,7 +340,8 @@ export default function Tasks() {
                   })
                 : t('no_date') || '—';
 
-              const rawProgress = Number(task.progress || task.progress_percentage || 0);
+              // ✅ نستخدم الآن helper يفضّل progress_percentage
+              const rawProgress = getNumericProgress(task);
               const progress =
                 Number.isFinite(rawProgress) && rawProgress >= 0 && rawProgress <= 100
                   ? rawProgress
