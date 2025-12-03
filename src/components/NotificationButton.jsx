@@ -150,13 +150,16 @@ const NotificationButton = () => {
           style={{
             top: 56,
             right: 0,
-            width: 340,
+            width: 'min(340px, calc(100vw - 24px))',
+            maxHeight: 'min(70vh, 520px)',
+            overflowY: 'auto',
             background: '#fff',
             borderRadius: 12,
             boxShadow: '0 6px 24px rgba(0,0,0,0.18)',
             zIndex: 2000,
             animation: 'fadeIn 0.18s ease-out',
           }}
+
         >
           <div className="p-3 border-bottom d-flex align-items-center justify-content-between">
             <strong style={{ fontSize: '0.95rem' }}>
@@ -266,5 +269,6 @@ const NotificationButton = () => {
     </div>
   );
 };
+
 
 export default NotificationButton;
