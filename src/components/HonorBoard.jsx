@@ -259,6 +259,7 @@ export default function HonorBoard({ mount = 'header' }) {
           display:flex; align-items:center; justify-content:center;
           font-weight:700; font-size:14px; line-height:1;
           box-shadow:0 2px 6px rgba(0,0,0,.16);
+          color:#111827; 
         }
 
         .hb-title{
@@ -355,3 +356,4 @@ export default function HonorBoard({ mount = 'header' }) {
     </div>
   );
 }
+
