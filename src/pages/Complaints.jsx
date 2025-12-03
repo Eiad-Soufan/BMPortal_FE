@@ -148,15 +148,7 @@ function Complaints() {
           <div className="cmp-hero-text">
             <h1 className="cmp-hero-title">{t('complaints', { defaultValue: 'complaints' })}</h1>
           </div>
-          {(localStorage.getItem('userRole') === 'employee') && (
-            <button
-              onClick={() => navigate('/submit-complaint')}
-              className="bm-btn bm-btn--primary me-2"
-              style={{ border: '1px solid rgba(255,255,255,.6)' }}
-            >
-              {t('add_complaint', { defaultValue: 'New Complaint' })}
-            </button>
-          )}
+
         </div>
       </section>
 
@@ -443,5 +435,6 @@ function Complaints() {
     </div>
   );
 }
+
 
 export default Complaints;
