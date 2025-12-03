@@ -12,12 +12,14 @@ code {
     monospace;
 }
 /* تثبيت حجم لوغو الهيدر مهما كانت القواعد العامة */
+/* تكبير اللوغو وتحسين ظهوره */
 .app-navbar .app-logo {
-  height: 36px !important;
-  max-height: 36px !important;
+  height: 44px !important;
+  max-height: 44px !important;
   width: auto !important;
-  max-width: 180px !important; /* اختياري لتجنّب التمدد العرضي */
+  max-width: 190px !important;
   object-fit: contain !important;
   display: inline-block;
   vertical-align: middle;
 }
+
