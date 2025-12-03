@@ -143,7 +143,7 @@ export default function Header() {
           object-fit: contain !important; display: inline-block; vertical-align: middle; border-radius: 10px;
         }
         @media (max-width: 576px){
-          .app-navbar .app-logo{ height: 34px !important; max-height: 34px !important; }
+          .app-navbar .app-logo{ height: 44px !important; max-height: 44px !important; }
         }
 
         /* محول اللغة */
@@ -200,7 +200,7 @@ export default function Header() {
         /* القائمة المنسدلة */
         .app-navbar .menu{
           position: absolute; right: 0; left: auto; top: calc(100% + 10px);
-          width: 260px; border-radius: 16px; padding: 12px;
+          width: min(260px, calc(100vw - 24px)); border-radius: 16px; padding: 12px;
           border: 1px solid rgba(255,255,255,.18);
           background: rgba(255,255,255,.96);
           backdrop-filter: blur(12px) saturate(110%);
@@ -327,3 +327,4 @@ export default function Header() {
     </div>
   );
 }
+
