@@ -207,6 +207,7 @@ export default function Header() {
           -webkit-backdrop-filter: blur(12px) saturate(110%);
           box-shadow: 0 16px 40px rgba(0,0,0,.22);
           animation: fadeIn .14s ease both;
+          z-index: 2100;
         }
         .app-navbar .menu .head{
           display:flex; align-items:center; gap:10px; padding:8px 10px 12px 10px;
@@ -327,4 +328,5 @@ export default function Header() {
     </div>
   );
 }
+
 
