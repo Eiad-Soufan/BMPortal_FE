@@ -64,7 +64,7 @@ export async function addComment(id, text) {
 }
 
 // Backward-compatible default export
-export default {
+const tasksApi = {
   listTasks,
   getTask,
   createTask,
@@ -76,3 +76,5 @@ export default {
   markTaskFailed,
   cancelTask,
 };
+
+export default tasksApi;
