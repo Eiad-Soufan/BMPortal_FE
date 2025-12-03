@@ -149,7 +149,9 @@ const NotificationButton = () => {
           className="position-absolute"
           style={{
             top: 56,
-            right: 0,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            right: 'auto',
             width: 'min(340px, calc(100vw - 24px))',
             maxHeight: 'min(70vh, 520px)',
             overflowY: 'auto',
@@ -159,6 +161,7 @@ const NotificationButton = () => {
             zIndex: 2000,
             animation: 'fadeIn 0.18s ease-out',
           }}
+        >
 
         >
           <div className="p-3 border-bottom d-flex align-items-center justify-content-between">
@@ -272,3 +275,4 @@ const NotificationButton = () => {
 
 
 export default NotificationButton;
+
