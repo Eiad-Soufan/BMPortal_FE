@@ -215,14 +215,27 @@ export default function Login() {
           display:flex; align-items:center; justify-content:space-between;
         }
         .brand{ display:flex; align-items:center; gap:12px; }
+/* حاوية الشعار — أكبر وخلفية زجاجية بيضاء واضحة */
         .brand-logo{
-          width:56px; height:56px; border-radius:12px;
-          background:rgba(255,255,255,.16);
-          display:grid; place-items:center;
-          backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
-          box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);
+          width:80px;
+          height:80px;
+          border-radius:20px;
+          background:rgba(255,255,255,.96);              /* خلفية شبه بيضاء */
+          display:grid;
+          place-items:center;
+          backdrop-filter:blur(10px) saturate(130%);
+          -webkit-backdrop-filter:blur(10px) saturate(130%);
+          box-shadow:0 14px 32px rgba(0,0,0,.25);        /* ظل قوي قليلاً ليبرز الشعار */
+          border:1px solid rgba(255,255,255,.9);
           overflow:hidden;
         }
+        .brand-logo img{
+          width:100%;
+          height:100%;
+          object-fit:contain;
+          display:block;
+        }
+
         .brand-logo img{
           width:100%; height:100%; object-fit:contain; display:block;
         }
@@ -359,13 +372,26 @@ export default function Login() {
           to{ opacity:1; transform:translateY(0); }
         }
 
-        @media (max-width:560px){
-          .login-hero-inner{ min-height:96px; }
-          .brand-title{ font-size:1.4rem; }
-          /* ✅ إصلاح القصّ في الموبايل */
-          .login-card{ margin:12px auto 28px; }
-        }
+@media (max-width:560px){
+  .login-hero-inner{
+    min-height:96px;
+    flex-direction:column;        /* عناصر الهيرو فوق بعض */
+    align-items:center;           /* توسيط أفقي */
+    justify-content:center;
+    text-align:center;
+    gap:10px;
+  }
+  .brand{
+    justify-content:center;       /* توسيط الشعار + النص */
+  }
+  .brand-title{ font-size:1.4rem; }
+  .brand-sub{ font-size:0.9rem; }
+  /* ✅ إصلاح القصّ في الموبايل */
+  .login-card{ margin:12px auto 28px; }
+}
+
       `}</style>
     </>
   );
 }
+
