@@ -92,12 +92,27 @@ export default function Header() {
     return () => document.removeEventListener('click', onDocClick);
   }, [menuOpen]);
 
+  // 🔴 هنا عدلنا دالة الخروج لتصفير حالة لوحة الشرف
   const logout = () => {
     try {
+      // إزالة التوكنات والبيانات الأساسية
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
       localStorage.removeItem('userId');
       localStorage.removeItem('userRole');
+
+      // إعادة تفعيل لوحة الشرف للجلسة القادمة:
+      // نحذف كل المفاتيح من نوع hb_closed_* من sessionStorage
+      if (typeof window !== 'undefined') {
+        const toRemove = [];
+        for (let i = 0; i < sessionStorage.length; i += 1) {
+          const key = sessionStorage.key(i);
+          if (key && key.startsWith('hb_closed_')) {
+            toRemove.push(key);
+          }
+        }
+        toRemove.forEach((k) => sessionStorage.removeItem(k));
+      }
     } finally {
       navigate('/login');
     }
@@ -328,5 +343,3 @@ export default function Header() {
     </div>
   );
 }
-
-
