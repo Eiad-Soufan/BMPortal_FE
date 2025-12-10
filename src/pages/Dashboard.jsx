@@ -69,8 +69,9 @@ function Dashboard() {
         if (!token) { console.warn('No access token found'); return; }
 
         const [secRes, formRes, userRes] = await Promise.all([
-          axios.get('/api/sections/', { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get('/api/forms/', { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get('/api/sections/?page_size=1000', { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get('/api/forms/?page_size=1000', {headers: { Authorization: `Bearer ${token}` },}),
+
           axios.get('/api/current-user/', { headers: { Authorization: `Bearer ${token}` } })
         ]);
 
@@ -239,3 +240,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
