@@ -54,7 +54,7 @@ export async function complaintsIndicator() {
 export async function markSeenComplaints() {
   try {
     const { role } = getCurrentUser();
-    const res = await axios.get('/api/complaints/');
+    const res = await axios.get('/api/complaints');
     const items = arr(res?.data);
 
     const targets = items.filter(c => {
@@ -141,3 +141,4 @@ export async function fetchIndicators() {
   ]);
   return { hasNewComplaints, hasNewTasks };
 }
+
