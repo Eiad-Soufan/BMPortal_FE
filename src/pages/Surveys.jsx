@@ -125,6 +125,14 @@ const __LOCAL_UI_CSS__ = `
   }
 }
 
+.srv-hero-title{
+  margin:0;
+  font-weight:900;
+  letter-spacing:.2px;
+  text-shadow: 0 2px 10px rgba(0,0,0,.25);
+  font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.2rem);
+}
+
 `;
 
 
@@ -186,7 +194,7 @@ export default function Surveys() {
 
       <div className="srv-hero">
         <div className="srv-hero-inner">
-          <h1 className="m-0 fw-bold">{t('surveys') || 'Surveys / الاستبيانات'}</h1>
+          <h1 className="srv-hero-title">{t('surveys') || 'Surveys / الاستبيانات'}</h1>
         </div>
       </div>
 
@@ -267,6 +275,7 @@ export default function Surveys() {
     </div>
   );
 }
+
 
 
 
