@@ -244,6 +244,38 @@ export default function Header() {
         @media (max-width: 576px){
           .app-navbar .avatar-name{ display:none; } /* على الموبايل نكتفي بالدائرة */
         }
+
+        /* ✅ Mobile/Small: اجعل تبويبات NavTabs مرنة (تلتف) وتبقى أنيقة */
+@media (max-width: 768px){
+  /* هذا يستهدف الحاويات داخل NavTabs بشكل عام بدون الاعتماد على كلاس محدد */
+  .app-navbar .d-block.d-md-none{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* حاول جعل عناصر التنقل تلتف لو كانت Flex */
+  .app-navbar .d-block.d-md-none nav,
+  .app-navbar .d-block.d-md-none .nav,
+  .app-navbar .d-block.d-md-none .navbar-nav,
+  .app-navbar .d-block.d-md-none ul{
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center;
+    gap: 8px;
+    padding-bottom: 6px;
+    margin: 0;
+  }
+
+  /* صغّر الأزرار/الروابط داخل التبويبات */
+  .app-navbar .d-block.d-md-none a,
+  .app-navbar .d-block.d-md-none button{
+    font-size: 13px !important;
+    padding: 8px 12px !important;
+    border-radius: 999px !important;
+    white-space: nowrap;
+  }
+}
+
       `}</style>
 
       <div className="container">
@@ -343,3 +375,4 @@ export default function Header() {
     </div>
   );
 }
+
