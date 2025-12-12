@@ -72,6 +72,24 @@ const __LOCAL_UI_CSS__ = `
   .bm-actionbar .bm-input{width:100%;}
   .bm-actionbar .dropdown,.bm-actionbar .bm-btn{width:100%;justify-content:center;}
 }
+
+/* ✅ Laptop/Desktop: keep search + dropdown on same row */
+@media (min-width: 992px){
+  .bm-actionbar{
+    flex-wrap: nowrap;
+  }
+  .bm-actionbar .d-flex{
+    flex-wrap: nowrap !important;
+  }
+  .bm-actionbar .bm-input{
+    min-width: 320px;
+    width: 320px;
+  }
+  .bm-actionbar .dropdown{
+    flex: 0 0 auto;
+  }
+}
+
 `;
 
 
@@ -439,3 +457,4 @@ export default function Tasks() {
     </div>
   );
 }
+
