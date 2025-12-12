@@ -162,7 +162,7 @@ const NotificationButton = () => {
           }}
         >
 
-        >
+
           <div className="p-3 border-bottom d-flex align-items-center justify-content-between">
             <strong style={{ fontSize: '0.95rem' }}>
               {t('notifications') || 'Notifications'}
@@ -274,6 +274,7 @@ const NotificationButton = () => {
 
 
 export default NotificationButton;
+
 
 
 
