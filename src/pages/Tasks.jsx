@@ -90,6 +90,15 @@ const __LOCAL_UI_CSS__ = `
   }
 }
 
+
+.tsk-hero-title{
+  margin:0;
+  font-weight:900;
+  letter-spacing:.2px;
+  text-shadow: 0 2px 10px rgba(0,0,0,.25);
+  font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.2rem);
+}
+
 `;
 
 
@@ -457,4 +466,5 @@ export default function Tasks() {
     </div>
   );
 }
+
 
