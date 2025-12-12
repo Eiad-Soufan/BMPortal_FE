@@ -1,16 +1,20 @@
+:root{
+  /* ✅ اجعل Bootstrap يستخدم نفس خط الموقع */
+  --bs-body-font-family: "Cairo", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
 body {
   margin: 0;
-  font-family: "Cairo", system-ui, -apple-system, "Segoe UI", Roboto,
-               "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: var(--bs-body-font-family) !important; /* ✅ يغلب Bootstrap */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
 /* تثبيت حجم لوغو الهيدر مهما كانت القواعد العامة */
 /* تكبير اللوغو وتحسين ظهوره */
 .app-navbar .app-logo {
@@ -22,4 +26,3 @@ code {
   display: inline-block;
   vertical-align: middle;
 }
-
