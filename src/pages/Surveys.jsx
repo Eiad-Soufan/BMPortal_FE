@@ -55,6 +55,51 @@ const __LOCAL_UI_CSS__ = `
 }
 .bm-card:hover{transform:translateY(-2px);box-shadow:0 16px 28px rgba(0,0,0,.12)}
 .card-appear{opacity:0;transform:translateY(12px) scale(.985);animation:fadeInUp .7s ease forwards}
+/* Buttons (same as Tasks) */
+.bm-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  font-weight:800;
+  border-radius:14px;
+  padding:.6rem .95rem;
+  border:0;
+  cursor:pointer;
+  transition:transform .12s ease,box-shadow .12s ease,filter .2s ease;
+  text-decoration:none;
+}
+.bm-btn:active{transform:translateY(1px) scale(.98)}
+.bm-btn--primary{
+  color:#fff;
+  background:linear-gradient(135deg,var(--bm-g1),var(--bm-g2),var(--bm-g3));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),0 10px 22px rgba(0,0,0,.14);
+}
+.bm-btn--primary:hover{filter:brightness(1.05)}
+.bm-btn--outline{
+  background:#fff;
+  color:var(--bm-ink);
+  border:1.5px solid color-mix(in oklab,var(--bm-g2) 70%,#fff 30%);
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+}
+.bm-btn--sm{
+  padding:.48rem .78rem;
+  border-radius:12px;
+  font-weight:800;
+  font-size:.95rem;
+}
+
+/* Dropdown menu style to match */
+.bm-actionbar .dropdown-toggle{ border:0 !important; }
+.bm-actionbar .dropdown-menu{
+  border-radius:14px;
+  border:1px solid var(--bm-border);
+  box-shadow:0 14px 30px rgba(0,0,0,.14);
+  padding:.35rem;
+}
+.bm-actionbar .dropdown-item{
+  border-radius:10px;
+  font-weight:700;
+}
 
 @media (max-width: 576px){
   .bm-actionbar{flex-direction: column;align-items: stretch;}
@@ -130,35 +175,40 @@ export default function Surveys() {
       <style>{__LOCAL_UI_CSS__}</style>
       <div className="container py-3 srv-content">
 
-        <div className="d-flex align-items-center justify-content-between mb-4">
-          <div className="d-flex gap-2">
-            <input
-              className="form-control"
-              style={{ minWidth: 220, borderRadius: 12, border: '1.5px solid color-mix(in oklab,#0b2e13 12%,#fff 88%)' }}
-              placeholder={t('search_placeholder') || 'Search...'}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-            <Dropdown>
-              <Dropdown.Toggle className="bm-btn bm-btn--primary bm-btn--sm">
-                {t(`filter_${statusFilter}`) || statusFilter}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {['all', 'draft', 'published', 'archived'].map(k => (
-                  <Dropdown.Item key={k} onClick={() => setStatusFilter(k)}>
-                    {t(`filter_${k}`) || k}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
+<div className="bm-actionbar mb-4">
+  <div className="d-flex align-items-center">
+    <input
+      className="form-control bm-input"
+      style={{ minWidth: 220 }}
+      placeholder={t('search_placeholder') || 'Search...'}
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+    />
 
-          {canCreate && (
-            <Button className="bm-btn bm-btn--primary bm-btn--sm" onClick={() => navigate('/surveys/new')}>
-              {t('create_survey') || 'New Survey'}
-            </Button>
-          )}
-        </div>
+    <Dropdown>
+      <Dropdown.Toggle className="bm-btn bm-btn--outline bm-btn--sm">
+        {t(`filter_${statusFilter}`) || statusFilter}
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        {['all', 'draft', 'published', 'archived'].map((k) => (
+          <Dropdown.Item key={k} onClick={() => setStatusFilter(k)}>
+            {t(`filter_${k}`) || k}
+          </Dropdown.Item>
+        ))}
+      </Dropdown.Menu>
+    </Dropdown>
+  </div>
+
+  {canCreate && (
+    <div className="ms-auto">
+      <Button className="bm-btn bm-btn--primary" onClick={() => navigate('/surveys/new')}>
+        {t('create_survey') || 'New Survey'}
+      </Button>
+    </div>
+  )}
+</div>
+
 
         {loading ? (
           <div className="text-center text-muted py-5">{t('loading') || 'Loading...'}</div>
@@ -188,7 +238,7 @@ export default function Surveys() {
               </div>
             ))}
             {filtered.length === 0 && !loading && (
-              <div className="text-center text-muted-50 py-5">{t('no_results') || 'No results'}</div>
+              <div className="text-center text-muted py-5">{t('no_results') || 'No results'}</div>
             )}
           </div>
         )}
@@ -199,4 +249,5 @@ export default function Surveys() {
     </div>
   );
 }
+
 
