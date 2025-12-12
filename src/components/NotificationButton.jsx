@@ -132,7 +132,6 @@ const NotificationButton = () => {
         aria-label={t('notifications') || 'Notifications'}
         title={t('notifications') || 'Notifications'}
         style={{ width: 44, height: 44, padding: 0, borderRadius: 12 }}
-      >
         🔔
         {unreadCount > 0 && (
           <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -275,4 +274,5 @@ const NotificationButton = () => {
 
 
 export default NotificationButton;
+
 
