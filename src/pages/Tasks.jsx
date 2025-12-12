@@ -99,6 +99,9 @@ const __LOCAL_UI_CSS__ = `
   font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.2rem);
 }
 
+@media (max-width: 560px){
+  .tsk-hero-title{ font-size:1.6rem; }
+}
 `;
 
 
@@ -466,5 +469,6 @@ export default function Tasks() {
     </div>
   );
 }
+
 
 
