@@ -10,71 +10,70 @@ import Header from '../components/Header';
 import Paginator from '../components/Paginator';
 
 const __LOCAL_UI_CSS__ = `
-:root{--bm-g1:#10c48b;--bm-g2:#0ea36b;--bm-g3:#0a6f47;--bm-ink:#0b2e13;--bm-bg:#02140c;--bm-card:#f9fafb;--bm-muted:#6b7280;--bm-radius:1rem;--bm-radius-sm:.75rem;--space-1:.5rem;--space-2:.75rem;--space-3:1rem}
-.bm-btn{display:inline-flex;align-items:center;gap:.5rem;font-weight:700;border-radius:999px;padding:.45rem .9rem;border:1.5px solid transparent;font-size:.9rem;letter-spacing:.02em;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,filter .2s ease}
+:root{--bm-g1:#10c48b;--bm-g2:#0ea36b;--bm-g3:#0a6f47;--bm-ink:#082d1f;--bm-ink2:#134233;--bm-border:color-mix(in oklab,#0b2e13 12%,#fff 88%);--space-1:.5rem;--space-2:.75rem;--space-3:1rem}
+.bm-btn{display:inline-flex;align-items:center;gap:.5rem;font-weight:800;border-radius:14px;padding:.6rem .95rem;border:0;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,filter .2s ease}
 .bm-btn:active{transform:translateY(1px) scale(.98)}
-.bm-btn--primary{color:#fff;background:linear-gradient(135deg,var(--bm-g1),var(--bm-g2),var(--bm-g3));box-shadow:0 10px 24px rgba(0,0,0,.32)}
-.bm-btn--primary:hover{filter:brightness(1.03);box-shadow:0 14px 30px rgba(0,0,0,.4)}
-.bm-btn--outline{background:rgba(255,255,255,.08);color:#ecfdf5;border-color:rgba(255,255,255,.45);box-shadow:0 8px 20px rgba(0,0,0,.26)}
-.bm-btn--outline:hover{background:rgba(255,255,255,.16);filter:brightness(1.04)}
-.bm-input{border-radius:999px;border:1.5px solid rgba(255,255,255,.56);background:rgba(255,255,255,.12);color:#f9fafb;padding:.45rem .9rem;font-size:.9rem;min-width:220px}
-.bm-input::placeholder{color:rgba(226,232,240,.7)}
-.bm-input:focus{outline:none;border-color:#a7f3d0;box-shadow:0 0 0 1px rgba(45,212,191,.7)}
-.bm-card{border:none;background:radial-gradient(circle at top left,#ffffff 0,#f9fafb 38%,#f3f4f6 100%);box-shadow:0 18px 45px rgba(15,23,42,.22);border-radius:var(--bm-radius);position:relative;overflow:hidden}
-.bm-card::before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at 0 0,rgba(16,196,139,.11),transparent 56%),radial-gradient(circle at 100% 0,rgba(14,163,107,.09),transparent 58%);opacity:.9;mix-blend-mode:multiply;pointer-events:none}
-.bm-card > .card-body{position:relative;z-index:1}
-.status-chip{display:inline-flex;align-items:center;gap:.35rem;border-radius:999px;padding:.15rem .55rem;font-size:.72rem;font-weight:700;border:1px solid transparent;background:rgba(248,250,252,.5);box-shadow:0 8px 18px rgba(15,23,42,.12)}
-.status-dot{width:.6rem;height:.6rem;border-radius:999px;box-shadow:0 0 0 1px rgba(15,23,42,.12)}
-.task-meta{font-size:.8rem;color:var(--bm-muted)}
+.bm-btn--primary{color:#fff;background:linear-gradient(135deg,var(--bm-g1),var(--bm-g2),var(--bm-g3));box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),0 10px 22px rgba(0,0,0,.14)}
+.bm-btn--primary:hover{filter:brightness(1.05)}
+.bm-btn--outline{background:#fff;color:var(--bm-ink);border:1.5px solid color-mix(in oklab,var(--bm-g2) 70%,#fff 30%);box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.bm-actionbar{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;background:#fff;padding:.55rem;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.10);border:1px solid var(--bm-border);margin-top:var(--space-2)}
+.bm-actionbar .d-flex{gap:.6rem;flex-wrap:wrap}
+.bm-input{border-radius:12px !important;border:1.5px solid var(--bm-border) !important;box-shadow:none !important;padding:.58rem .8rem !important}
+.bm-card{border-radius:16px;border:1px solid var(--bm-border);box-shadow:0 8px 18px rgba(0,0,0,.08);transition:transform .12s ease,box-shadow .12s ease;overflow:hidden;background:#fff}
+.bm-card:hover{transform:translateY(-2px);box-shadow:0 16px 28px rgba(0,0,0,.12)}
+.bm-chip{display:inline-block;padding:.25rem .55rem;border-radius:999px;font-weight:800;font-size:.8rem}
+.bm-chip--open{background: color-mix(in oklab,#0ea5e9 18%,#fff 82%);color:var(--bm-ink2)}
+.bm-chip--success{background: color-mix(in oklab,#22c55e 18%,#fff 82%);color:var(--bm-ink2)}
+.bm-chip--failed{background: color-mix(in oklab,#ef4444 18%,#fff 82%);color:var(--bm-ink2)}
+.bm-chip--cancelled{background: color-mix(in oklab,#6b7f78 18%,#fff 82%);color:var(--bm-ink2)}
+
+/* hero — مطابق للداشبورد */
+.tsk-hero{
+  background:
+    radial-gradient(1200px 200px at 20% -60%, rgba(255,255,255,.22), transparent 60%),
+    linear-gradient(135deg, #10c48b, #0ea36b, #0a6f47);
+  color:#fff;
+  padding: 16px 16px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.12);
+  animation: dashHeroIn .7s ease both;
+  text-align:center;
+}
+.tsk-hero-inner{
+  max-width:980px; margin:0 auto;
+  min-height:110px;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+}
+
+/* انيميشن خفيف مثل الداشبورد */
+@keyframes fadeInUp{ from{opacity:0; transform:translateY(12px) scale(.985)} to{opacity:1; transform:translateY(0) scale(1)} }
+@keyframes dashHeroIn{ from{opacity:0; transform:translateY(-8px)} to{opacity:1; transform:translateY(0)} }
+
+.tsk-content{ animation: fadeInUp .7s ease both; }
+
+/* cards appear (نفس الانيميشن الخفيف) */
+.card-appear{opacity:0;transform:translateY(12px) scale(.985);animation:fadeInUp .7s ease forwards}
+
+/* progress (تبقى كما هي بصرياً) */
 .progress-track{height:.4rem;border-radius:999px;background:#e5e7eb;overflow:hidden}
 .progress-bar{height:100%;border-radius:999px;background:linear-gradient(90deg,#0ea5e9,#22c55e)}
-.status-chip--open{border-color:#0ea5e9;color:#0369a1;background:rgba(219,234,254,.9)}
-.status-chip--success{border-color:#22c55e;color:#166534;background:rgba(220,252,231,.9)}
-.status-chip--failed{border-color:#ef4444;color:#991b1b;background:rgba(254,226,226,.9)}
-.status-chip--cancelled{border-color:#6b7280;color:#374151;background:rgba(243,244,246,.95)}
-.bm-actionbar{display:flex;flex-wrap:wrap;gap:.5rem}
-.bm-actionbar .d-flex{gap:.5rem}
+
+/* status text colors (كما كانت) */
 .status-text{font-size:.8rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
 .status-text.st--open{color:#0ea5e9}
 .status-text.st--success{color:#22c55e}
 .status-text.st--failed{color:#ef4444}
-.status-text.st--cancelled{color:#6b7280}
+.status-text.st--cancelled{color:#6b7f78}
 
-/* ✅ رسبونسيف لشريط الأدوات في الموبايل */
+/* رسبونسيف للشريط */
 @media (max-width: 576px){
-  .bm-actionbar{
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .bm-actionbar > .d-flex{
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.5rem;
-  }
-  .bm-actionbar .bm-input{
-    min-width: 0 !important;
-    width: 100%;
-  }
-  .bm-actionbar .dropdown,
-  .bm-actionbar .bm-btn{
-    width: 100%;
-    justify-content: center;
-  }
+  .bm-actionbar{flex-direction: column;align-items: stretch;}
+  .bm-actionbar > .d-flex{width:100%;flex-direction: column;align-items: stretch;gap:.5rem;}
+  .bm-actionbar .bm-input{width:100%;}
+  .bm-actionbar .dropdown,.bm-actionbar .bm-btn{width:100%;justify-content:center;}
 }
-
-/* hero */
-.tsk-hero{
-  background:linear-gradient(135deg,#10c48b,#0ea36b,#0a6f47);
-  color:#fff;
-  padding:18px 16px;
-  text-align:center;
-}
-.tsk-hero-inner{max-width:1100px;margin:0 auto;min-height:96px;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.tsk-hero-title{margin:0;font-weight:900;letter-spacing:.2px;font-size:clamp(1.6rem,1.2rem + 1.2vw,2.2rem)}
-@keyframes cardIn{to{opacity:1;transform:none}}
-.card-appear{opacity:0;transform:translateY(8px);animation:cardIn .45s ease forwards}
 `;
+
 
 // role helpers
 const getRole = () => {
@@ -250,10 +249,7 @@ export default function Tasks() {
   return (
     <div
       className="min-vh-100 d-flex flex-column"
-      style={{
-        background:
-          'linear-gradient(180deg, #0f5132 0%, #1b4332 40%, #0b2e13 100%)',
-      }}
+      style={{ backgroundColor: '#f8f9fa' }}
     >
       <Header />
 
@@ -269,7 +265,8 @@ export default function Tasks() {
 
       <style>{__LOCAL_UI_CSS__}</style>
 
-      <div className="container mt-3 mb-4">
+      <div className="container py-3 tsk-content">
+
         {/* شريط الأدوات: بحث + فلتر + زر إضافة مهمة */}
         <div className="d-flex align-items-center justify-content-between mb-4 bm-actionbar">
           <div className="d-flex">
@@ -305,7 +302,8 @@ export default function Tasks() {
         </div>
 
         {loading ? (
-          <div className="text-center text-white py-5">
+          <div className="text-center text-muted py-5">
+
             {t('loading') || 'Loading...'}
           </div>
         ) : (
@@ -417,7 +415,8 @@ export default function Tasks() {
 
             {!loading && filtered.length === 0 && (
               <div className="col-12">
-                <div className="text-center text-white-50 py-5">
+                <div className="text-center text-muted py-5">
+
                   {t('no_tasks') || 'No tasks found.'}
                 </div>
               </div>
