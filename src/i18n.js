@@ -147,7 +147,7 @@ const resources = {
       "change_password": "تغيير كلمة السر",
       "account_information": "معلومات الحساب",
       "security_hint": "الأمان",
-      "password_hidden_hint": "لحمايتك، كلمة السر مخفية. يمكنك تحديثها من الزر أعلاه.",
+      "password_hidden_hint": "كلمة السر مخفية لتغييرها او الحصول عليها يرجى التواصل مع مدير النظام",
       "fill_all_fields": "رجاءً املأ كل الحقول.",
       "password_too_short": "كلمة السر قصيرة (6 أحرف على الأقل).",
       "passwords_not_match": "كلمتا السر غير متطابقتين.",
@@ -311,7 +311,7 @@ const resources = {
       "change_password": "Change Password",
       "account_information": "Account Information",
       "security_hint": "Security",
-      "password_hidden_hint": "For your security, your password is hidden. You can update it using the button above.",
+      "password_hidden_hint": "The password is hidden. To change it or retrieve it, please contact the system administrator.",
       "fill_all_fields": "Please fill all fields.",
       "password_too_short": "Password is too short (min 6 characters).",
       "passwords_not_match": "Passwords do not match.",
@@ -344,3 +344,4 @@ i18n.use(initReactI18next).init({
 
 
 export default i18n;
+
