@@ -162,6 +162,13 @@ const resources = {
       "save_changes": "حفظ",
       "saving": "جارٍ الحفظ...",
       "loading": "جارٍ التحميل..."
+      official_announcements: 'الإعلانات الرسمية',
+      official_announcements_short: 'إعلانات رسمية',
+      official_announcements_title: 'الإعلانات الرسمية',
+      official_announcements_subtitle: 'العطل الرسمية والاستحقاقات المعتمدة',
+      tab_public_holidays: 'العطل الرسمية (الموظفون المحليون/المكتب)',
+      tab_leave_days: 'استحقاق الإجازات (الموظفون الأجانب/الخط الأمامي)',
+      view_pdf: 'عرض ملف PDF',
 
     },
   },
@@ -326,6 +333,14 @@ const resources = {
       "save_changes": "Save",
       "saving": "Saving...",
       "loading": "Loading..."
+      official_announcements: 'Official Announcements',
+      official_announcements_short: 'Official Announcements',
+      official_announcements_title: 'Official Announcements',
+      official_announcements_subtitle: 'Public holidays and approved entitlements',
+      tab_public_holidays: 'Public Holidays (Local/Office Staff)',
+      tab_leave_days: 'Leave Entitlement (Foreign/Front-line Staff)',
+      view_pdf: 'View PDF',
+
     },
   },
 };
@@ -344,4 +359,5 @@ i18n.use(initReactI18next).init({
 
 
 export default i18n;
+
 
