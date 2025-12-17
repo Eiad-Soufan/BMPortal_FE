@@ -29,7 +29,7 @@ export default function Footer() {
             
                 <Link
                 to="/official-announcements"
-                className="text-sm text-gray-600 hover:text-green-600 transition"
+                className="bm-link bm-link-pill"
               >
                 {t('official_announcements')}
                 </Link>
@@ -186,4 +186,5 @@ export default function Footer() {
     </>
   );
 }
+
 
