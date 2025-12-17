@@ -161,7 +161,7 @@ const resources = {
       "confirm_new_password": "أعد إدخال كلمة السر الجديدة",
       "save_changes": "حفظ",
       "saving": "جارٍ الحفظ...",
-      "loading": "جارٍ التحميل..."
+      "loading": "جارٍ التحميل...",
       official_announcements: 'الإعلانات الرسمية',
       official_announcements_short: 'إعلانات رسمية',
       official_announcements_title: 'الإعلانات الرسمية',
@@ -332,7 +332,7 @@ const resources = {
       "confirm_new_password": "Re-enter new password",
       "save_changes": "Save",
       "saving": "Saving...",
-      "loading": "Loading..."
+      "loading": "Loading...",
       official_announcements: 'Official Announcements',
       official_announcements_short: 'Official Announcements',
       official_announcements_title: 'Official Announcements',
