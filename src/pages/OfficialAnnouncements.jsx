@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
 
 const OfficialAnnouncements = () => {
   const { t, i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState('public');
+  const [visible, setVisible] = useState(false);
 
   const isRTL = i18n.language === 'ar';
 
+  useEffect(() => {
+    // نفس نمط fade-in المستخدم في بقية الصفحات
+    const timer = setTimeout(() => setVisible(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 px-4 py-10">
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="max-w-5xl mx-auto"
+      <div
+        className={`max-w-5xl mx-auto transition-all duration-500 ${
+          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+        }`}
       >
         {/* Title */}
         <div className={`mb-8 ${isRTL ? 'text-right' : 'text-left'}`}>
@@ -54,12 +59,8 @@ const OfficialAnnouncements = () => {
         </div>
 
         {/* Content */}
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className={`bg-white dark:bg-gray-800 rounded-xl shadow p-6 ${
+        <div
+          className={`bg-white dark:bg-gray-800 rounded-xl shadow p-6 transition-all duration-300 ${
             isRTL ? 'text-right' : 'text-left'
           }`}
         >
@@ -70,8 +71,7 @@ const OfficialAnnouncements = () => {
               </h2>
 
               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                سيتم عرض قائمة العطل الرسمية المعتمدة هنا.  
-                (سيتم ربط ملف PDF أو جدول منظم لاحقًا)
+                سيتم عرض قائمة العطل الرسمية المعتمدة هنا.
               </p>
 
               <button className="text-green-600 hover:underline text-sm">
@@ -87,8 +87,7 @@ const OfficialAnnouncements = () => {
               </h2>
 
               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                سيتم عرض تفاصيل استحقاق الإجازات للموظفين الأجانب والخط الأمامي هنا،
-                مع تقسيم الاستحقاق السنوي.
+                تفاصيل استحقاق الإجازات للموظفين الأجانب والخط الأمامي.
               </p>
 
               <button className="text-green-600 hover:underline text-sm">
@@ -96,8 +95,8 @@ const OfficialAnnouncements = () => {
               </button>
             </div>
           )}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </div>
   );
 };
