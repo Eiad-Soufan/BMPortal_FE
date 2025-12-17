@@ -19,6 +19,7 @@ import Tasks from './pages/Tasks';
 import AdminRoute from './utils/AdminRoute';
 import HROnly from './utils/HROnly';
 import ProtectedRoute from './utils/ProtectedRoute';
+import OfficialAnnouncements from './pages/OfficialAnnouncements';
 
 function App() {
   return (
@@ -54,6 +55,11 @@ function App() {
 
         <Route path="/submit-complaint" element={<ProtectedRoute><SubmitComplaint /></ProtectedRoute>} />
         <Route path="/policies" element={<Policies />} />
+        <Route
+          path="/official-announcements"
+          element={<OfficialAnnouncements />}
+        />
+
         <Route path="/tasks" element={<ProtectedRoute><Tasks /></ProtectedRoute>} />
         <Route path="/tasks/new" element={<ProtectedRoute><TaskForm /></ProtectedRoute>} />
         <Route path="/tasks/:id" element={<ProtectedRoute><TaskDetails /></ProtectedRoute>} />
