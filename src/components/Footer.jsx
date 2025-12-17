@@ -26,6 +26,14 @@ export default function Footer() {
                 <Link to="/policies" className="bm-link bm-link-pill">
                   {t('policies', { defaultValue: 'سياسات الشركة' })}
                 </Link>
+            
+                <Link
+                to="/official-announcements"
+                className="text-sm text-gray-600 hover:text-green-600 transition"
+              >
+                {t('official_announcements')}
+                </Link>
+
                 <br/><br/>
             <div className="bm-copy">© {new Date().getFullYear()}</div>
           </div>
@@ -178,3 +186,4 @@ export default function Footer() {
     </>
   );
 }
+
