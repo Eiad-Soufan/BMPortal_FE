@@ -8,8 +8,8 @@ const resources = {
       "published": "منشور",
       "archived": "مؤرشف",
       "status_changed": "تم تحديث الحالة",
-      system_title: 'البوابة الالكترونية لشركة بركة المدينة',
-      system_subtitle: 'منصة داخلية للنماذج والاعتمادات والتواصل',
+      system_title: 'البوابة الالكترونية لشركة البركة',
+      system_subtitle: 'منصة داخلية للنماذج والتواصل',
       dashboard_title: 'لوحة النماذج',
       logout: 'تسجيل الخروج',
       language: 'اللغة',
@@ -179,7 +179,7 @@ const resources = {
       "archived": "Archived",
       "status_changed": "Status updated",
       system_title: 'Berkat Madinah Portal',
-      system_subtitle: 'Internal platform for forms, approvals & communications',
+      system_subtitle: 'Internal platform for forms & communications',
       dashboard_title: 'Model Dashboard',
       logout: 'Logout',
       language: 'Language',
@@ -359,5 +359,6 @@ i18n.use(initReactI18next).init({
 
 
 export default i18n;
+
 
 
