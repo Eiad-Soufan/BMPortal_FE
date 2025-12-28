@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 import logo2 from '../assets/logo2.png';
+import valuesImg from '../assetsvalues.png'; // غيّري الاسم حسب اسم الصورة الحقيقي
 
 export default function Login() {
   const { t, i18n } = useTranslation();
@@ -106,74 +107,90 @@ export default function Login() {
         </section>
 
         {/* بطاقة تسجيل الدخول (زجاجية) */}
-        <section className="login-content">
-          <form className={`login-card ${isAR ? 'rtl' : ''}`} onSubmit={handleSubmit}>
-            <h2 className="card-title">
-              {t('login.signin', { defaultValue: 'Sign in' })}
-            </h2>
+<section className="login-content">
+  <div className="login-grid">
+    <form className={`login-card ${isAR ? 'rtl' : ''}`} onSubmit={handleSubmit}>
+      <h2 className="card-title">
+        {t('login.signin', { defaultValue: 'Sign in' })}
+      </h2>
 
-            {err && <div className="card-error">{err}</div>}
+      {err && <div className="card-error">{err}</div>}
 
-            <div className="field">
-              <label>
-                {t('login.username', { defaultValue: 'Username' })}
-              </label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder={t('login.username_ph', {
-                  defaultValue: 'Enter your username'
-                })}
-                required
-                autoFocus
-              />
-            </div>
+      <div className="field">
+        <label>
+          {t('login.username', { defaultValue: 'Username' })}
+        </label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder={t('login.username_ph', { defaultValue: 'Enter your username' })}
+          required
+          autoFocus
+        />
+      </div>
 
-            <div className="field">
-              <label>
-                {t('login.password', { defaultValue: 'Password' })}
-              </label>
-              <div className="pwd-wrap">
-                <input
-                  type={showPwd ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder={t('login.password_ph', {
-                    defaultValue: 'Enter your password'
-                  })}
-                  required
-                />
-                <button
-                  type="button"
-                  className="pwd-toggle"
-                  onClick={() => setShowPwd(!showPwd)}
-                  aria-label={showPwd ? 'Hide password' : 'Show password'}
-                >
-                  {showPwd ? '🙈' : '👁️'}
-                </button>
-              </div>
-            </div>
+      <div className="field">
+        <label>
+          {t('login.password', { defaultValue: 'Password' })}
+        </label>
+        <div className="pwd-wrap">
+          <input
+            type={showPwd ? 'text' : 'password'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder={t('login.password_ph', { defaultValue: 'Enter your password' })}
+            required
+          />
+          <button
+            type="button"
+            className="pwd-toggle"
+            onClick={() => setShowPwd(!showPwd)}
+            aria-label={showPwd ? 'Hide password' : 'Show password'}
+          >
+            {showPwd ? '🙈' : '👁️'}
+          </button>
+        </div>
+      </div>
 
-            {/* 🔥 تمت إزالة تذكرني كما طلبت */}
+      <button className="submit" type="submit" disabled={loading}>
+        {loading
+          ? t('login.loading', { defaultValue: 'Signing in…' })
+          : t('login.signin', { defaultValue: 'Sign in' })}
+      </button>
 
-            <button className="submit" type="submit" disabled={loading}>
-              {loading
-                ? t('login.loading', { defaultValue: 'Signing in…' })
-                : t('login.signin', { defaultValue: 'Sign in' })}
-            </button>
+      <p className="policy-note">
+        {t('login.policy_note', {
+          defaultValue:
+            'بتسجيل دخولك، فإنك تقر بأنك اطلعت على سياسات الشركة والتزمت بها.'
+        })}{' '}
+        <a href="/policies" className="policy-link">
+          {t('login.policy_link', { defaultValue: 'عرض سياسات الشركة' })}
+        </a>
+      </p>
+    </form>
 
-            <p className="policy-note">
-              {t('login.policy_note', {
-                defaultValue:
-                  'بتسجيل دخولك، فإنك تقر بأنك اطلعت على سياسات الشركة والتزمت بها.'
-              })}{' '}
-              <a href="/policies" className="policy-link">
-                {t('login.policy_link', { defaultValue: 'عرض سياسات الشركة' })}
-              </a>
-            </p>
-          </form>
-        </section>
+    {/* بطاقة القيم */}
+    <aside className={`values-card ${isAR ? 'rtl' : ''}`}>
+      <div className="values-head">
+        <div className="values-kicker">Our Values</div>
+        <div className="values-title">قيمنا</div>
+      </div>
+
+      <div className="values-img">
+        <img src={valuesImg} alt="Our Values" />
+      </div>
+
+      <div className="values-foot">
+        <span className="dot" />
+        <span className="values-foot-text">
+          {t('login.values_note', { defaultValue: 'What we believe in, what we build with.' })}
+        </span>
+      </div>
+    </aside>
+  </div>
+</section>
+
       </div>
 
       {/* ====== Styles (قوي + زجاج + نفس الأنيميشن) ====== */}
@@ -396,9 +413,119 @@ export default function Login() {
   .login-card{ margin:12px auto 28px; }
 }
 
+
+.login-grid{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 14px 26px;
+  display: grid;
+  grid-template-columns: 520px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+/* Values card (glassy + premium) */
+.values-card{
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.38);
+  border-radius: var(--radius);
+  box-shadow: 0 16px 40px rgba(0,0,0,.20);
+  backdrop-filter: blur(12px) saturate(135%);
+  -webkit-backdrop-filter: blur(12px) saturate(135%);
+  padding: 16px;
+  animation: fadeInUp .85s ease both;
+}
+
+.values-card.rtl{
+  direction: rtl;
+  text-align: right;
+}
+
+.values-head{
+  display:flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.values-kicker{
+  font-weight: 900;
+  font-size: .95rem;
+  letter-spacing: .2px;
+  color: #f0fff4;
+  opacity: .95;
+}
+
+.values-title{
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: #ffffff;
+  text-shadow: 0 1px 0 rgba(0,0,0,.10);
+}
+
+.values-img{
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow: 0 12px 28px rgba(0,0,0,.18);
+  transform: translateZ(0);
+}
+
+.values-img img{
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  display:block;
+  filter: saturate(108%) contrast(102%);
+  transition: transform .25s ease, filter .25s ease;
+}
+
+.values-card:hover .values-img img{
+  transform: scale(1.02);
+  filter: saturate(112%) contrast(104%);
+}
+
+.values-foot{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top: 12px;
+  color: rgba(255,255,255,.92);
+  font-weight: 700;
+  font-size: .9rem;
+}
+
+.values-foot .dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gA), var(--g1) 30%, var(--g2) 70%);
+  box-shadow: 0 6px 14px rgba(0,0,0,.18);
+}
+
+/* Responsive: stack nicely */
+@media (max-width: 980px){
+  .login-grid{
+    grid-template-columns: 1fr;
+  }
+  .login-card{
+    max-width: 560px;
+    margin: 14px auto 0;
+  }
+  .values-card{
+    max-width: 560px;
+    margin: 0 auto 24px;
+  }
+  .values-img img{
+    height: 280px;
+  }
+}
+
       `}</style>
     </>
   );
 }
+
 
 
