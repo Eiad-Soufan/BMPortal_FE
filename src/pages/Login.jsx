@@ -405,20 +405,18 @@ export default function Login() {
           font-size: .95rem;
           color: var(--ink);
         }
-        .values-imgWrap{
-          border-radius: 14px;
-          overflow:hidden;
-          border: 1px solid rgba(0,0,0,.06);
-          box-shadow: 0 10px 22px rgba(0,0,0,.12);
-          background: rgba(255,255,255,.6);
-        }
-        .values-imgWrap img{
-          width:100%;
-          height: 150px;          /* ✅ صغير */
-          object-fit: cover;       /* بدون تمديد */
-          display:block;
-          filter: saturate(108%) contrast(102%);
-        }
+.values-imgWrap{
+  background:#fff;
+  padding: 10px;
+}
+
+.values-imgWrap img{
+  width:100%;
+  height: 210px;      /* كبّرنا الارتفاع */
+  object-fit: contain; /* ✅ بدون قص */
+  display:block;
+}
+
 
         /* Animations */
         @keyframes fadeInUp{
@@ -449,4 +447,5 @@ export default function Login() {
     </>
   );
 }
+
 
