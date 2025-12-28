@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 import logo2 from '../assets/logo2.png';
-import valuesImg from '../assetsvalues.png'; // غيّري الاسم حسب اسم الصورة الحقيقي
+import valuesImg from '../assets/values.png'; // غيّري الاسم حسب اسم الصورة الحقيقي
 
 export default function Login() {
   const { t, i18n } = useTranslation();
@@ -526,6 +526,7 @@ export default function Login() {
     </>
   );
 }
+
 
 
 
