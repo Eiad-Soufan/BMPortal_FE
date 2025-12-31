@@ -86,20 +86,54 @@ function ModelTable({ forms, t, i18n }) {
                   <td>{form.name_en}</td>
                   <td>{form.description}</td>
                   <td>
-                    {form.file ? (
-<a
-  className="btn btn-outline-primary btn-sm"
-  target="_blank"
-  rel="noopener noreferrer"
-  href={`/print?id=${form.id}`}
->
-  {t('download')}
-</a>
-
-                    ) : (
+                    {form.file ? (() => {
+                      const fileUrl = String(form.file); // رابط الملف من الـ API (افترضه URL)
+                      const lower = fileUrl.toLowerCase();
+                  
+                      const isPdf = lower.endsWith('.pdf');
+                      const isExcel =
+                        lower.endsWith('.xlsx') ||
+                        lower.endsWith('.xls') ||
+                        lower.endsWith('.csv');
+                  
+                      // 1) PDF => افتحه بصفحة العرض الجديدة
+                      if (isPdf) {
+                        return (
+                          <a
+                            className="btn btn-outline-primary btn-sm"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={`/print?id=${form.id}`}
+                          >
+                            {t('download')}
+                          </a>
+                        );
+                      }
+                  
+                      // 2) Excel => نزّل مباشرة
+                      if (isExcel) {
+                        return (
+                          <a
+                            className="btn btn-outline-primary btn-sm"
+                            href={fileUrl}
+                            download
+                          >
+                            {t('download')}
+                          </a>
+                        );
+                      }
+                  
+                      // 3) أي نوع غير معروف: خليها تحميل كحل عام
+                      return (
+                        <a className="btn btn-outline-primary btn-sm" href={fileUrl} download>
+                          {t('download')}
+                        </a>
+                      );
+                    })() : (
                       <span className="text-muted">{t('no_file')}</span>
                     )}
                   </td>
+
                 </tr>
               ))
             ) : (
@@ -136,3 +170,4 @@ function ModelTable({ forms, t, i18n }) {
 }
 
 export default ModelTable;
+
