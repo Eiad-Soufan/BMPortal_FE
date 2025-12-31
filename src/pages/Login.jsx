@@ -101,40 +101,39 @@ export default function Login() {
       <div className="login-page">
         <div className="login-bg" />
 
-        <section className="login-hero">
-          <div className="login-hero-inner">
-            <div className="brand">
-              <div className="brand-logo">
+        {/* ===== Centered Header ===== */}
+        <section className="login-hero centered">
+          <div className="login-hero-inner centered">
+            <div className="hero-stack">
+              <div className="brand-logo hero-logo">
                 <img src={logo2} alt="logo" />
               </div>
-              <div className="brand-text">
-                <h1 className="brand-title">
-                  {t('system_title', { defaultValue: 'Berkat Madinah Portal' })}
-                </h1>
-                <p className="brand-sub">
-                  {t('system_subtitle', {
-                    defaultValue: 'Internal portal for forms, approvals & communications'
-                  })}
-                </p>
-              </div>
-            </div>
 
-            <div className="lang-switch">
-              <button
-                className={`lang-btn ${isAR ? 'active' : ''}`}
-                onClick={() => changeLang('ar')}
-                type="button"
-              >
-                AR
-              </button>
-              <span className="lang-sep">|</span>
-              <button
-                className={`lang-btn ${!isAR ? 'active' : ''}`}
-                onClick={() => changeLang('en')}
-                type="button"
-              >
-                EN
-              </button>
+              <h1 className="hero-title">
+                {t('system_title_ar', { defaultValue: 'البوابة الالكترونية لشركة البركة' })}
+              </h1>
+
+              <p className="hero-sub">
+                {t('system_subtitle_ar', { defaultValue: 'منصة داخلية للنماذج والتواصل' })}
+              </p>
+
+              <div className="lang-switch center">
+                <button
+                  className={`lang-btn ${isAR ? 'active' : ''}`}
+                  onClick={() => changeLang('ar')}
+                  type="button"
+                >
+                  AR
+                </button>
+                <span className="lang-sep">|</span>
+                <button
+                  className={`lang-btn ${!isAR ? 'active' : ''}`}
+                  onClick={() => changeLang('en')}
+                  type="button"
+                >
+                  EN
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -163,9 +162,7 @@ export default function Login() {
 
             {/* FORM center */}
             <form className={`login-card center-card ${isAR ? 'rtl' : ''}`} onSubmit={handleSubmit}>
-              <h2 className="card-title">
-                {t('login.signin', { defaultValue: 'Sign in' })}
-              </h2>
+              <h2 className="card-title">{t('login.signin', { defaultValue: 'Sign in' })}</h2>
 
               {err && <div className="card-error">{err}</div>}
 
@@ -268,19 +265,28 @@ export default function Login() {
           opacity:.98;
         }
 
-        /* Hero */
+        /* ===== Centered Hero ===== */
         .login-hero{
           position:relative; z-index:1;
-          padding:16px;
+          padding:18px 16px 10px;
           animation:heroIn .8s ease both;
         }
         .login-hero-inner{
           max-width:1240px;
           margin:0 auto;
-          min-height:110px;
-          display:flex; align-items:center; justify-content:space-between;
+          display:flex;
         }
-        .brand{ display:flex; align-items:center; gap:12px; }
+        .login-hero.centered .login-hero-inner.centered{
+          justify-content:center;
+          text-align:center;
+        }
+        .hero-stack{
+          display:flex;
+          flex-direction:column;
+          align-items:center;
+          gap:10px;
+          padding:6px 0;
+        }
 
         .brand-logo{
           width:80px; height:80px; border-radius:20px;
@@ -292,29 +298,44 @@ export default function Login() {
           border:1px solid rgba(255,255,255,.9);
           overflow:hidden;
         }
+        .hero-logo{
+          width:92px; height:92px; border-radius:24px;
+          box-shadow:0 18px 46px rgba(0,0,0,.28);
+        }
         .brand-logo img{ width:100%; height:100%; object-fit:contain; display:block; }
 
-        .brand-title{
-          margin:0; color:#fff; font-weight:900; font-size:1.6rem;
+        .hero-title{
+          margin:0;
+          color:#fff;
+          font-weight:950;
+          font-size:1.65rem;
+          letter-spacing:.2px;
           text-shadow:0 1px 0 rgba(0,0,0,.12);
         }
-        .brand-sub{ margin:4px 0 0; color:#f2fffa; opacity:.95; }
+        .hero-sub{
+          margin:0;
+          color:#f2fffa;
+          opacity:.95;
+          font-weight:700;
+          font-size:1.02rem;
+        }
 
-        /* Language */
+        /* Language centered */
         .lang-switch{
           display:flex; align-items:center; gap:8px;
           background:rgba(255,255,255,.16);
-          padding:6px 8px; border-radius:12px;
+          padding:7px 10px; border-radius:14px;
+          box-shadow: 0 10px 26px rgba(0,0,0,.12);
         }
+        .lang-switch.center{ justify-content:center; }
         .lang-btn{
           border:none; background:transparent; color:#f0fff4;
-          font-weight:900; padding:4px 8px; border-radius:8px; cursor:pointer;
+          font-weight:900; padding:5px 10px; border-radius:10px; cursor:pointer;
         }
-        .lang-btn.active{ background:rgba(255,255,255,.3); }
+        .lang-btn.active{ background:rgba(255,255,255,.30); }
         .lang-sep{ color:rgba(255,255,255,.7); font-weight:800; }
 
-        /* Content */
-        .login-content{ position:relative; z-index:2; padding: 0 16px 32px; }
+        .login-content{ position:relative; z-index:2; padding: 6px 16px 32px; }
 
         /* ===== Triple layout ===== */
         .login-triple{
@@ -338,9 +359,7 @@ export default function Login() {
           -webkit-backdrop-filter:blur(12px) saturate(135%);
           animation:fadeInUp .8s ease both;
         }
-        .center-card{
-          transform: translateY(-2px);
-        }
+        .center-card{ transform: translateY(-2px); }
         .login-card.rtl{ direction:rtl; text-align:right; }
 
         .card-title{ margin:0 0 12px; font-weight:900; color:var(--ink); }
@@ -454,7 +473,7 @@ export default function Login() {
         .vpm-card{ padding:10px 0; }
         .vpm-card + .vpm-card{ border-top:1px solid rgba(0,0,0,.08); }
 
-        /* ✅ تصغير الخط + نعومة أكثر */
+        /* smaller text */
         .vpm-h{
           margin:0 0 6px;
           font-weight: 950;
@@ -483,13 +502,6 @@ export default function Login() {
         }
 
         /* Responsive */
-        @media (max-width: 1100px){
-          .login-triple{
-            grid-template-columns: 1fr minmax(520px, 560px) 1fr;
-          }
-        }
-
-        /* Tablet/Mobile: form first, then AR then EN (أو العكس حسب ما تحب) */
         @media (max-width: 980px){
           .login-triple{
             grid-template-columns: 1fr;
@@ -503,22 +515,15 @@ export default function Login() {
             max-width: 560px;
             margin: 0 auto;
           }
+          .hero-title{ font-size:1.45rem; }
+          .hero-sub{ font-size: .98rem; }
         }
 
         @media (max-width:560px){
-          .login-hero-inner{
-            min-height:96px;
-            flex-direction:column;
-            align-items:center;
-            justify-content:center;
-            text-align:center;
-            gap:10px;
-          }
-          .brand{ justify-content:center; }
-          .brand-title{ font-size:1.4rem; }
-          .brand-sub{ font-size:0.9rem; }
-          .login-content{ padding: 0 12px 22px; }
-
+          .login-content{ padding: 6px 12px 22px; }
+          .hero-logo{ width:86px; height:86px; border-radius:22px; }
+          .hero-title{ font-size:1.28rem; }
+          .hero-sub{ font-size:.95rem; }
           .vpm-title{ font-size: .90rem; }
           .vpm-h{ font-size: .96rem; }
           .vpm-p{ font-size: .86rem; }
