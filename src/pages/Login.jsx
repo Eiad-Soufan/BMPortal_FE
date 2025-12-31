@@ -19,9 +19,7 @@ export default function Login() {
 
   useEffect(() => {
     const storedLang = localStorage.getItem('bm_portal_lang');
-    if (storedLang && storedLang !== i18n.language) {
-      i18n.changeLanguage(storedLang);
-    }
+    if (storedLang && storedLang !== i18n.language) i18n.changeLanguage(storedLang);
   }, [i18n]);
 
   const changeLang = (lang) => {
@@ -35,14 +33,12 @@ export default function Login() {
     setErr('');
     setLoading(true);
     try {
-      // 1) Token
       let res = await axios.post('/api/token/', { username, password });
       const { access, refresh } = res.data || {};
       if (!access) throw new Error('No access token');
       localStorage.setItem('access', access);
       if (refresh) localStorage.setItem('refresh', refresh);
 
-      // 2) Current user
       const ures = await axios.get('/api/current-user/', {
         headers: { Authorization: `Bearer ${access}` }
       });
@@ -63,7 +59,7 @@ export default function Login() {
     }
   };
 
-  // ====== Content from your image (NO icons) ======
+  // ====== Text (NO icons) ======
   const blocksEn = [
     {
       title: 'Vision',
@@ -82,7 +78,6 @@ export default function Login() {
     }
   ];
 
-  // ترجمة عربية جميلة وواضحة (إذا بدك نفس صياغة معيّنة قلّي وعدّلها حرفيًا)
   const blocksAr = [
     {
       title: 'الرؤية',
@@ -145,10 +140,32 @@ export default function Login() {
         </section>
 
         <section className="login-content">
-          <div className="login-layout">
-            {/* Login Card */}
-            <form className={`login-card ${isAR ? 'rtl' : ''}`} onSubmit={handleSubmit}>
-              <h2 className="card-title">{t('login.signin', { defaultValue: 'Sign in' })}</h2>
+          {/* ===== 3 columns: EN | FORM | AR ===== */}
+          <div className="login-triple">
+            {/* EN left */}
+            <aside className="vpm-side vpm-en" aria-label="Vision Purpose Mission EN">
+              <div className="vpm-head">
+                <div className="vpm-kicker">
+                  <span className="vpm-dot" />
+                  <span className="vpm-title">Vision • Purpose • Mission</span>
+                </div>
+              </div>
+
+              <div className="vpm-stack">
+                {blocksEn.map((b, idx) => (
+                  <section className="vpm-card" key={`en-${idx}`}>
+                    <h3 className="vpm-h">{b.title}:</h3>
+                    <p className="vpm-p">{b.text}</p>
+                  </section>
+                ))}
+              </div>
+            </aside>
+
+            {/* FORM center */}
+            <form className={`login-card center-card ${isAR ? 'rtl' : ''}`} onSubmit={handleSubmit}>
+              <h2 className="card-title">
+                {t('login.signin', { defaultValue: 'Sign in' })}
+              </h2>
 
               {err && <div className="card-error">{err}</div>}
 
@@ -201,50 +218,22 @@ export default function Login() {
               </p>
             </form>
 
-            {/* Vision / Purpose / Mission (NO icons) */}
-            <aside className="vp-panel" aria-label="Vision Purpose Mission">
-              <div className="vp-head">
-                <div className="vp-kicker">
-                  <span className="vp-dot" />
-                  <span className="vp-title">Vision • Purpose • Mission</span>
-                </div>
-                <div className="vp-sub">
-                  Balanced bilingual summary in a clean, brand-consistent style.
+            {/* AR right */}
+            <aside className="vpm-side vpm-ar" dir="rtl" aria-label="Vision Purpose Mission AR">
+              <div className="vpm-head">
+                <div className="vpm-kicker">
+                  <span className="vpm-dot" />
+                  <span className="vpm-title">الرؤية • الغاية • الرسالة</span>
                 </div>
               </div>
 
-              <div className="vp-grid">
-                {/* EN (left) */}
-                <div className="vp-col en">
-                  <div className="vp-colLabel">EN</div>
-
-                  {blocksEn.map((b, idx) => (
-                    <section className="vp-card" key={`en-${idx}`}>
-                      <h3 className="vp-h">{b.title}:</h3>
-                      <p className="vp-p">{b.text}</p>
-                    </section>
-                  ))}
-                </div>
-
-                {/* AR (right) */}
-                <div className="vp-col ar" dir="rtl">
-                  <div className="vp-colLabel">AR</div>
-
-                  {blocksAr.map((b, idx) => (
-                    <section className="vp-card" key={`ar-${idx}`}>
-                      <h3 className="vp-h">{b.title}:</h3>
-                      <p className="vp-p">{b.text}</p>
-                    </section>
-                  ))}
-                </div>
-              </div>
-
-              <div className="vp-foot">
-                <span className="vp-footText">
-                  {t('login.vpm.footer', {
-                    defaultValue: 'All statements are part of the company identity and internal brand direction.'
-                  })}
-                </span>
+              <div className="vpm-stack">
+                {blocksAr.map((b, idx) => (
+                  <section className="vpm-card" key={`ar-${idx}`}>
+                    <h3 className="vpm-h">{b.title}:</h3>
+                    <p className="vpm-p">{b.text}</p>
+                  </section>
+                ))}
               </div>
             </aside>
           </div>
@@ -259,15 +248,12 @@ export default function Login() {
           --g3:#00602c;
           --g4:#004a22;
           --ink:#00602c;
-
-          --white:#fff;
           --radius:16px;
         }
 
         .login-page{
           position:relative;
           min-height:100vh;
-          direction:ltr;
           overflow:hidden;
           background:#eef6f2;
         }
@@ -289,7 +275,7 @@ export default function Login() {
           animation:heroIn .8s ease both;
         }
         .login-hero-inner{
-          max-width:1080px;
+          max-width:1240px;
           margin:0 auto;
           min-height:110px;
           display:flex; align-items:center; justify-content:space-between;
@@ -297,32 +283,22 @@ export default function Login() {
         .brand{ display:flex; align-items:center; gap:12px; }
 
         .brand-logo{
-          width:80px;
-          height:80px;
-          border-radius:20px;
+          width:80px; height:80px; border-radius:20px;
           background:rgba(255,255,255,.96);
-          display:grid;
-          place-items:center;
+          display:grid; place-items:center;
           backdrop-filter:blur(10px) saturate(130%);
           -webkit-backdrop-filter:blur(10px) saturate(130%);
           box-shadow:0 14px 32px rgba(0,0,0,.25);
           border:1px solid rgba(255,255,255,.9);
           overflow:hidden;
         }
-        .brand-logo img{
-          width:100%;
-          height:100%;
-          object-fit:contain;
-          display:block;
-        }
+        .brand-logo img{ width:100%; height:100%; object-fit:contain; display:block; }
 
         .brand-title{
           margin:0; color:#fff; font-weight:900; font-size:1.6rem;
           text-shadow:0 1px 0 rgba(0,0,0,.12);
         }
-        .brand-sub{
-          margin:4px 0 0; color:#f2fffa; opacity:.95;
-        }
+        .brand-sub{ margin:4px 0 0; color:#f2fffa; opacity:.95; }
 
         /* Language */
         .lang-switch{
@@ -337,18 +313,20 @@ export default function Login() {
         .lang-btn.active{ background:rgba(255,255,255,.3); }
         .lang-sep{ color:rgba(255,255,255,.7); font-weight:800; }
 
-        /* Content layout */
-        .login-content{ position:relative; z-index:2; padding: 0 16px 28px; }
-        .login-layout{
-          max-width:1080px;
-          margin: 0 auto;
+        /* Content */
+        .login-content{ position:relative; z-index:2; padding: 0 16px 32px; }
+
+        /* ===== Triple layout ===== */
+        .login-triple{
+          max-width:1240px;
+          margin:0 auto;
           display:grid;
-          grid-template-columns: 520px 1fr;
+          grid-template-columns: minmax(240px, 1fr) minmax(520px, 560px) minmax(240px, 1fr);
           gap: 16px;
           align-items:start;
         }
 
-        /* Card */
+        /* Center form card */
         .login-card{
           width:100%;
           padding:22px 18px;
@@ -360,14 +338,12 @@ export default function Login() {
           -webkit-backdrop-filter:blur(12px) saturate(135%);
           animation:fadeInUp .8s ease both;
         }
-        .login-card.rtl{
-          direction:rtl;
-          text-align:right;
+        .center-card{
+          transform: translateY(-2px);
         }
-        .card-title{
-          margin:0 0 12px;
-          font-weight:900; color:var(--ink);
-        }
+        .login-card.rtl{ direction:rtl; text-align:right; }
+
+        .card-title{ margin:0 0 12px; font-weight:900; color:var(--ink); }
         .card-error{
           background:#ffe6e6; color:#b00020;
           border:1px solid #ffbcbc;
@@ -375,13 +351,8 @@ export default function Login() {
           margin-bottom:10px; font-weight:700;
         }
 
-        .field{
-          display:flex; flex-direction:column;
-          gap:6px; margin-top:10px;
-        }
-        .field label{
-          font-weight:800; color:var(--ink);
-        }
+        .field{ display:flex; flex-direction:column; gap:6px; margin-top:10px; }
+        .field label{ font-weight:800; color:var(--ink); }
         .field input{
           border-radius:12px;
           border:1px solid rgba(10,111,71,.28);
@@ -398,10 +369,7 @@ export default function Login() {
 
         .pwd-wrap{ position:relative; }
         .pwd-wrap input{ padding-right:36px; }
-        .login-card.rtl .pwd-wrap input{
-          padding-right:12px; padding-left:36px; text-align:right;
-        }
-
+        .login-card.rtl .pwd-wrap input{ padding-right:12px; padding-left:36px; text-align:right; }
         .pwd-toggle{
           position:absolute; right:8px; top:50%;
           transform:translateY(-50%);
@@ -418,7 +386,7 @@ export default function Login() {
           border-radius:12px;
           border:none;
           color:#fff;
-          font-weight:900; letter-spacing:.2px;
+          font-weight:900;
           cursor:pointer;
           background:linear-gradient(135deg,var(--gA),var(--g1) 25%,var(--g2) 60%);
           box-shadow:0 10px 26px rgba(0,0,0,.22);
@@ -439,124 +407,70 @@ export default function Login() {
         }
         .policy-link{ font-weight:600; text-decoration:underline; cursor:pointer; }
 
-        /* ===== VPM Panel (NO icons) ===== */
-        .vp-panel{
-          padding:18px 16px;
+        /* ===== Side panels (EN/AR) ===== */
+        .vpm-side{
+          padding:14px 14px;
           border-radius: var(--radius);
-          background: rgba(255,255,255,.14);
-          border: 1px solid rgba(255,255,255,.38);
-          box-shadow: 0 16px 40px rgba(0,0,0,.18);
+          background: rgba(255,255,255,.12);
+          border: 1px solid rgba(255,255,255,.30);
+          box-shadow: 0 14px 34px rgba(0,0,0,.16);
           backdrop-filter: blur(12px) saturate(135%);
           -webkit-backdrop-filter: blur(12px) saturate(135%);
-          animation: fadeInUp .9s ease both;
-          overflow:hidden;
+          animation: fadeInUp .95s ease both;
           position:relative;
+          overflow:hidden;
         }
-        .vp-panel:before{
+        .vpm-side:before{
           content:"";
           position:absolute; inset:-40px;
           background:
-            radial-gradient(520px 200px at 0% 0%, rgba(255,255,255,.20), transparent 60%),
-            radial-gradient(520px 220px at 100% 0%, rgba(34,197,94,.13), transparent 60%);
+            radial-gradient(520px 200px at 0% 0%, rgba(255,255,255,.18), transparent 60%),
+            radial-gradient(520px 220px at 100% 0%, rgba(34,197,94,.10), transparent 60%);
           pointer-events:none;
         }
 
-        .vp-head{ position:relative; z-index:1; margin-bottom:12px; }
-        .vp-kicker{
+        .vpm-head{ position:relative; z-index:1; margin-bottom:10px; }
+        .vpm-kicker{
           display:inline-flex; align-items:center; gap:10px;
-          padding:8px 10px;
+          padding:7px 9px;
           border-radius:12px;
-          background: rgba(255,255,255,.18);
-          border:1px solid rgba(255,255,255,.28);
+          background: rgba(255,255,255,.14);
+          border:1px solid rgba(255,255,255,.22);
         }
-        .vp-dot{
-          width:10px; height:10px; border-radius:50%;
+        .vpm-dot{
+          width:9px; height:9px; border-radius:50%;
           background: linear-gradient(135deg,var(--gA),var(--g1));
-          box-shadow: 0 0 0 3px rgba(0,148,71,.12);
+          box-shadow: 0 0 0 3px rgba(0,148,71,.10);
         }
-        .vp-title{
+        .vpm-title{
           font-weight:900;
           color: rgba(0,0,0,.78);
-          letter-spacing:.2px;
-        }
-        .vp-sub{
-          margin-top:8px;
-          color: rgba(0,0,0,.70);
-          font-weight:600;
-          line-height:1.45;
+          letter-spacing:.15px;
+          font-size: .92rem;
         }
 
-        .vp-grid{
-          position:relative; z-index:1;
-          display:grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
-          margin-top: 12px;
-        }
+        .vpm-stack{ position:relative; z-index:1; }
 
-        .vp-col{
-          border-radius:14px;
-          padding:12px;
-          background: rgba(255,255,255,.18);
-          border:1px solid rgba(255,255,255,.28);
-          transition: transform .12s ease, filter .12s ease;
-        }
-        .vp-col:hover{ transform: translateY(-1px); filter: saturate(110%); }
+        .vpm-card{ padding:10px 0; }
+        .vpm-card + .vpm-card{ border-top:1px solid rgba(0,0,0,.08); }
 
-        .vp-col.en{ text-align:left; }
-        .vp-col.ar{ text-align:right; }
-
-        .vp-colLabel{
-          display:inline-flex;
-          align-items:center;
-          gap:8px;
-          font-weight:900;
-          color: var(--ink);
-          margin-bottom:10px;
-        }
-        .vp-colLabel:after{
-          content:"";
-          height:1px;
-          width:56px;
-          background: rgba(0,96,44,.25);
-          display:inline-block;
-          margin-left:8px;
-        }
-        .vp-col.ar .vp-colLabel:after{
-          margin-left:0;
-          margin-right:8px;
-        }
-
-        .vp-card{
-          padding:12px 0;
-        }
-        .vp-card + .vp-card{
-          border-top:1px solid rgba(0,0,0,.08);
-        }
-        .vp-h{
+        /* ✅ تصغير الخط + نعومة أكثر */
+        .vpm-h{
           margin:0 0 6px;
           font-weight: 950;
           color: rgba(0,0,0,.78);
-          font-size: 1.06rem;
-          letter-spacing:.1px;
+          font-size: .98rem;
         }
-        .vp-p{
+        .vpm-p{
           margin:0;
-          color: rgba(0,0,0,.68);
+          color: rgba(0,0,0,.66);
           font-weight:650;
           line-height:1.55;
-          font-size: .96rem;
-        }
-
-        .vp-foot{
-          position:relative; z-index:1;
-          margin-top:12px;
-          padding-top:12px;
-          border-top: 1px solid rgba(255,255,255,.28);
-          color: rgba(0,0,0,.70);
-          font-weight:700;
           font-size: .88rem;
         }
+
+        .vpm-en{ text-align:left; }
+        .vpm-ar{ text-align:right; }
 
         /* Animations */
         @keyframes fadeInUp{
@@ -569,14 +483,26 @@ export default function Login() {
         }
 
         /* Responsive */
+        @media (max-width: 1100px){
+          .login-triple{
+            grid-template-columns: 1fr minmax(520px, 560px) 1fr;
+          }
+        }
+
+        /* Tablet/Mobile: form first, then AR then EN (أو العكس حسب ما تحب) */
         @media (max-width: 980px){
-          .login-layout{
+          .login-triple{
             grid-template-columns: 1fr;
             gap: 12px;
           }
-          .login-card{ max-width: 520px; margin: 12px auto 0; }
-          .vp-panel{ max-width: 520px; margin: 0 auto; }
-          .vp-grid{ grid-template-columns: 1fr; }
+          .center-card{ order: 1; }
+          .vpm-ar{ order: 2; }
+          .vpm-en{ order: 3; }
+
+          .login-card, .vpm-side{
+            max-width: 560px;
+            margin: 0 auto;
+          }
         }
 
         @media (max-width:560px){
@@ -592,6 +518,10 @@ export default function Login() {
           .brand-title{ font-size:1.4rem; }
           .brand-sub{ font-size:0.9rem; }
           .login-content{ padding: 0 12px 22px; }
+
+          .vpm-title{ font-size: .90rem; }
+          .vpm-h{ font-size: .96rem; }
+          .vpm-p{ font-size: .86rem; }
         }
       `}</style>
     </>
