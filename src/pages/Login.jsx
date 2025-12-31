@@ -110,11 +110,11 @@ export default function Login() {
               </div>
 
               <h1 className="hero-title">
-                {t('system_title_ar', { defaultValue: 'البوابة الالكترونية لشركة البركة' })}
+                {t('system_title', { defaultValue: 'البوابة الالكترونية لشركة البركة' })}
               </h1>
 
               <p className="hero-sub">
-                {t('system_subtitle_ar', { defaultValue: 'منصة داخلية للنماذج والتواصل' })}
+                {t('system_subtitle', { defaultValue: 'منصة داخلية للنماذج والتواصل' })}
               </p>
 
               <div className="lang-switch center">
@@ -532,3 +532,4 @@ export default function Login() {
     </>
   );
 }
+
